@@ -38,6 +38,7 @@ export const ProductForm = () => {
       initialValues={{ name: '', category: '', price: '' }}
       validationSchema={productValidationSchema}
       onSubmit={submitProductForm}
+      className="space-y-6"
     >
       {({ isSubmitting, status }) => (
         <Form>
@@ -47,13 +48,19 @@ export const ProductForm = () => {
 
           {status && status.message && (
             <div
-              className={status.success ? 'success-message' : 'error-message'}
+              className={`${
+                status.success ? 'text-green-500' : 'text-red-500'
+              } border px-4 py-3 rounded relative`}
             >
               {status.message}
             </div>
           )}
 
-          <button type="submit" disabled={isSubmitting}>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
             Submit
           </button>
         </Form>
