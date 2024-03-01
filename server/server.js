@@ -16,6 +16,7 @@ app.get('/', (_, res) => {
   res.send({ status: 200 });
 });
 
+app.use(express.json());
 app.use(productApi);
 
 process.on('SIGINT', function () {

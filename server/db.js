@@ -173,12 +173,7 @@ const products = [
     category: 'meat',
     price: 553,
   },
-  {
-    id: '56a00029-858b-4061-9e45-9ada7ed14f92',
-    name: 'azuki bean',
-    category: 'greens',
-    price: 53,
-  },
+
   {
     id: '61d33bc2-f24a-4cd9-9ed7-dce40337ce59',
     name: 'alfalfa sprout',

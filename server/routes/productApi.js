@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAll, getNearestPrices } = require('../services/product');
+const { getAll, getNearestPrices, create } = require('../services/product');
 const { handleAsync } = require('../utils/methods');
 
 const DEFAULT_PAGE_SIZE = 24;
@@ -39,6 +39,15 @@ router.get(
     const { page, perPage, n = NEAREST_PRICED_PRODUCTS_COUNT } = req.query;
     const result = await getNearestPrices(productId, n, page, perPage);
     res.status(200).json(result);
+  })
+);
+
+router.post(
+  '/api/products',
+  handleAsync(async (req, res) => {
+    const { name, category, price } = req.body;
+    const result = await create({ name, category, price });
+    res.status(201).json(result);
   })
 );
 

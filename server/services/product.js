@@ -2,10 +2,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const products = require('../db.js');
+const { v4: uuidv4 } = require('uuid');
 const { paginate } = require('../utils/methods');
+const { get } = require('../routes/productApi.js');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+const create = async (productData) => {
+  const newProduct = {
+    id: uuidv4(),
+    ...productData,
+  };
+
+  return newProduct;
+};
 
 const getAll = async ({ category, minPrice, maxPrice, page, perPage }) => {
   let filteredProducts = products;
@@ -60,4 +71,4 @@ const getNearestPrices = async (productId, n, page, perPage) => {
   return paginate(nearestProducts, page, perPage);
 };
 
-module.exports = { getAll, getNearestPrices };
+module.exports = { create, getAll, getNearestPrices };
