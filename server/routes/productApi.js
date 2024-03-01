@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getProducts } = require('../services/product');
-const handleAsync = require('../utils/handleAsync');
+const { getAll, getNearestPrices } = require('../services/product');
+const { handleAsync } = require('../utils/methods');
 
 const DEFAULT_PAGE_SIZE = 24;
+const NEAREST_PRICED_PRODUCTS_COUNT = 5;
 
 const parsePagination = (req, _, next) => {
   req.query.page = parseInt(req.query.page) || 1;
@@ -25,7 +26,18 @@ router.get(
       perPage,
     };
 
-    const result = await getProducts(filters);
+    const result = await getAll(filters);
+    res.status(200).json(result);
+  })
+);
+
+router.get(
+  '/api/products/:productId/nearest-prices',
+  parsePagination,
+  handleAsync(async (req, res) => {
+    const { productId } = req.params;
+    const { page, perPage, n = NEAREST_PRICED_PRODUCTS_COUNT } = req.query;
+    const result = await getNearestPrices(productId, n, page, perPage);
     res.status(200).json(result);
   })
 );
